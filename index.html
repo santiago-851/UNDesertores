@@ -1,72 +1,186 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="./image/plants.png" type="image/x-icon" attribution="https://icons8.com/icon/q2Ni6jgYWAUK/sprout">
-    <script src="./modules/jquery.min.js"></script>
-    <link rel="stylesheet" href="./index.css">
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
-    <!-- <script src="https://cdn.tailwindcss.com"></script> -->
-    <script src="./modules/tailwind.css"></script>
-    <script src="./modules/bootstrap.min.js"></script>
-    <link href="./modules/bootstrap.min.css" rel="stylesheet">
-    <title>Biodiversity Hotspot Explorer</title>
+    <title>Quiz 17 • Matemáticas Básicas</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <style>
+        :root {
+            --color-primario: #007bff;
+            --color-secundario: #6c757d;
+            --fondo: #f8f9fa;
+            --texto: #212529;
+            --borde: #dee2e6;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            background-color: var(--fondo);
+            color: var(--texto);
+            scroll-behavior: smooth;
+        }
+
+        header {
+            background: linear-gradient(90deg, #007bff, #00b4d8);
+            color: white;
+            text-align: center;
+            padding: 2rem 1rem;
+            border-bottom: 4px solid #00b4d8;
+        }
+
+        header img {
+            width: 300px;
+            border-radius: 10px;
+            margin-top: 1rem;
+            transition: transform 0.4s;
+        }
+
+        header img:hover {
+            transform: scale(1.05);
+        }
+
+        a {
+            color: white;
+            font-weight: bold;
+            text-decoration: none;
+            border: 2px solid white;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            transition: 0.3s;
+        }
+
+        a:hover {
+            background: white;
+            color: #007bff;
+        }
+
+        main {
+            display: grid;
+            grid-template-columns: 1fr;
+            max-width: 900px;
+            margin: 2rem auto;
+            gap: 2rem;
+            padding: 0 1rem;
+        }
+
+        section {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            transition: 0.3s;
+        }
+
+        section:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+        }
+
+        section img {
+            width: 100%;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+        }
+
+        label {
+            display: block;
+            margin-top: 0.6rem;
+        }
+
+        input {
+            padding: 0.5rem;
+            width: 100%;
+            border-radius: 6px;
+            border: 1px solid var(--borde);
+            margin-bottom: 0.8rem;
+        }
+
+        button {
+            background: var(--color-primario);
+            color: white;
+            border: none;
+            padding: 0.7rem 1.5rem;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background: #0056b3;
+        }
+
+        .resultado {
+            font-weight: bold;
+            margin-top: 0.8rem;
+        }
+
+        footer {
+            text-align: center;
+            padding: 1rem;
+            background: #f1f1f1;
+            color: #333;
+            font-size: 0.9rem;
+        }
+
+        /* Barra de progreso */
+        #progressBar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 6px;
+            background: #00b4d8;
+            z-index: 9999;
+            transition: width 0.2s ease-out;
+        }
+    </style>
 </head>
+
 <body>
-  <nav class="bg-gray-800">
-    <div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
-      <div class="relative flex h-16 items-center justify-between">
-        <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
-          <!-- Mobile menu button-->
-          <button type="button" class="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white" aria-controls="mobile-menu" aria-expanded="false">
-            <span class="absolute -inset-0.5"></span>
-            <span class="sr-only">Open main menu</span>
-            <!--Icon when menu is closed. Menu open: "hidden", Menu closed: "block"-->
-            <svg class="block h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
-            </svg>
-            <!--Icon when menu is open. Menu open: "block", Menu closed: "hidden"-->
-            <svg class="hidden h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-            </svg>
-          </button>
-        </div>
-        <div class="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
-          <div class="flex flex-shrink-0 items-center">
-            <img class="h-8 w-auto" src="image/plants.png" alt="Logo" attribution="https://icons8.com/icon/q2Ni6jgYWAUK/sprout">
-            <span class="text-white text-lg font-bold font-italic pl-4">Bio-Hotspots</span>
-          </div>
-          <div class="hidden sm:ml-6 sm:block">
-            <div class="flex space-x-4">
-              <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-              <a href="#" class="bg-gray-900 text-white rounded-md px-3 py-2 text-sm font-medium" aria-current="page">Map</a>
-              <a href="./pages/introduction.html" class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Introduction</a>
-              <a href="./pages/analysis.html" class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Analysis</a>
-              <a href="./pages/reference.html" class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Reference</a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  
-    <!-- Mobile menu, show/hide based on menu state. -->
-    <div class="sm:hidden" id="mobile-menu">
-      <div class="space-y-1 px-2 pb-3 pt-2">
-         <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-         <a href="#" class="bg-gray-900 text-white rounded-md px-3 py-2 text-sm font-medium" aria-current="page">Map</a>
-         <a href="./pages/introduction.html" class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Introduction</a>
-         <a href="./pages/analysis.html" class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Analysis</a>
-         <a href="./pages/reference.html" class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Reference</a>
-      </div>
-    </div>
-  </nav>
 
-    <div id="map-container">
-        <div id="map"></div>
-    </div>
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-    <script src="./map.js"></script>
+    <div id="progressBar"></div>
 
+    <header>
+        <h1>Quiz 17: Matemáticas Básicas</h1>
+        <h2>Por Santiago Roberto Saiz</h2>
+        <img src="canal3.png" alt="Santiago Roberto Saiz">
+        <p>
+            <a href="https://www.youtube.com/channel/UCcs3RmowmkizCNbL_tptKhw" target="_blank">🎓 Mi Canal de YouTube</a>
+        </p>
+    </header>
+
+    <main>
+
+        <section id="pregunta1">
+            <h3>Pregunta 1: Cálculos con Imagen</h3>
+            <img src="pregunta1.png" alt="Cálculos con Imagen">
+            <label>Radio del cuarto de circunferencia (r):</label>
+            <input type="number" id="input_radio_circunferencia" placeholder="Ingrese el radio r">
+            <button id="calculateButton">Calcular</button>
+            <p class="resultado" id="calculationResult"></p>
+        </section>
+
+        <section id="pregunta2">
+            <h3>Pregunta 2: Área sombreada</h3>
+            <img src="pregunta2.png" alt="Parte sombreada">
+            <label>Lado del cuadrado:</label>
+            <input type="number" id="input_cuadrado_lado" placeholder="Ingrese el valor del lado">
+            <label>Radio de la circunferencia:</label>
+            <input type="number" id="input_circunferencia_radio" placeholder="Ingrese el radio">
+            <button id="calculateButton2">Calcular</button>
+            <p class="resultado" id="calculationResult2"></p>
+        </section>
+
+        <!-- Se pueden agregar más secciones como las originales -->
+    </main>
+
+    <footer>
+        © 2025 Santiago Roberto Saiz | Todos los derechos reservados
+    </footer>
+
+    <script src="script.js"></script>
 </body>
 </html>
