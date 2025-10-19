@@ -292,6 +292,8 @@ document.addEventListener('DOMContentLoaded', () => {
         setResult(res12, `Área = ${area.toFixed(4)} cm²`);
     });
 
+});
+
    /* ===============================
    GALERÍA INTERACTIVA
    =============================== */
@@ -326,5 +328,3 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
-
-});
