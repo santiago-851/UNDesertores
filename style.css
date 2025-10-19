@@ -104,8 +104,8 @@ header h2 {
 
 /* Imagen principal (foto o logo) */
 header img#calculation-image {
-  width: 220px;
-  border-radius: 10px;
+  width: 320px;          /* antes: 220px */
+  border-radius: 12px;
   margin-top: 1.2rem;
   transition: transform 0.4s;
 }
