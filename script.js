@@ -292,4 +292,39 @@ document.addEventListener('DOMContentLoaded', () => {
         setResult(res12, `Área = ${area.toFixed(4)} cm²`);
     });
 
+   /* ===============================
+   GALERÍA INTERACTIVA
+   =============================== */
+document.addEventListener('DOMContentLoaded', () => {
+  const galleryImages = document.querySelectorAll('.photo-gallery img');
+  
+  // Crear el modal
+  const modal = document.createElement('div');
+  modal.id = 'galleryModal';
+  modal.innerHTML = `
+    <span id="closeModal">&times;</span>
+    <img id="modalImage" src="" alt="Imagen ampliada">
+  `;
+  document.body.appendChild(modal);
+  
+  const modalImage = document.getElementById('modalImage');
+  const closeModal = document.getElementById('closeModal');
+  
+  galleryImages.forEach(img => {
+    img.addEventListener('click', () => {
+      modalImage.src = img.src;
+      modal.classList.add('active');
+    });
+  });
+  
+  closeModal.addEventListener('click', () => {
+    modal.classList.remove('active');
+  });
+  
+  modal.addEventListener('click', e => {
+    if (e.target === modal) modal.classList.remove('active');
+  });
+});
+
+
 });
