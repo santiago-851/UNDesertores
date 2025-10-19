@@ -1,5 +1,5 @@
 /* ===============================
-   ESTILO GLOBAL - SANTIAGO R. SAIZ
+   ESTILO GLOBAL - SANTIAGO ROBERTO SAIZ
    =============================== */
 
 :root {
@@ -99,7 +99,7 @@ header a:hover {
   cursor: pointer;
   font-size: 20px;
   color: var(--color-primario);
-  box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
   transition: 0.3s;
 }
 
@@ -145,6 +145,7 @@ section {
   box-shadow: 0 4px 14px var(--sombra);
   border: 1px solid var(--borde);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  overflow: hidden; /* Evita que las imágenes sobresalgan */
 }
 
 section:hover {
@@ -155,6 +156,18 @@ section:hover {
 section h3 {
   margin-bottom: 1rem;
   color: var(--color-primario);
+}
+
+/* Imágenes dentro del recuadro */
+section img {
+  width: 100%;
+  max-width: 600px;
+  display: block;
+  margin: 1rem auto;
+  border-radius: 10px;
+  border: 2px solid var(--borde);
+  object-fit: contain;
+  background: white;
 }
 
 /* ===============================
@@ -200,12 +213,12 @@ button {
   max-width: 250px;
   display: block;
   margin: 0.5rem auto;
-  box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
 }
 
 button:hover {
   transform: translateY(-3px);
-  box-shadow: 0 6px 16px rgba(0,0,0,0.25);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
 }
 
 /* ===============================
