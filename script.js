@@ -33,6 +33,28 @@ document.addEventListener('DOMContentLoaded', () => {
         element.style.color = color;
     };
 
+   /* =========================
+   CONTROL DE TEMA CLARO/OSCURO
+========================= */
+const themeToggle = document.createElement('button');
+themeToggle.id = 'theme-toggle';
+themeToggle.innerHTML = '🌙';
+document.querySelector('header').appendChild(themeToggle);
+
+// Cargar preferencia guardada
+const savedTheme = localStorage.getItem('theme');
+if (savedTheme) document.documentElement.setAttribute('data-theme', savedTheme);
+
+// Cambiar tema
+themeToggle.addEventListener('click', () => {
+  const currentTheme = document.documentElement.getAttribute('data-theme');
+  const newTheme = currentTheme === 'dark' ? '' : 'dark';
+  document.documentElement.setAttribute('data-theme', newTheme);
+  localStorage.setItem('theme', newTheme);
+  themeToggle.innerHTML = newTheme === 'dark' ? '☀️' : '🌙';
+});
+
+
     /* =========================
        PREGUNTA 1
     ========================== */
