@@ -104,14 +104,16 @@ header h2 {
 
 /* Imagen principal (foto o logo) */
 header img#calculation-image {
-  width: 320px;          /* antes: 220px */
+  width: 50%;              /* ocupa la mitad del ancho disponible */
+  max-width: 500px;        /* no más grande que 500px */
+  min-width: 250px;
   border-radius: 12px;
-  margin-top: 1.2rem;
+  margin-top: 1rem;
   transition: transform 0.4s;
 }
 
 header img#calculation-image:hover {
-  transform: scale(1.05);
+  transform: scale(1.06);
 }
 
 /* ===== Botón canal ===== */
