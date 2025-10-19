@@ -5,101 +5,108 @@
 
 document.addEventListener('DOMContentLoaded', () => {
 
-    /* =========================
-       BARRA DE PROGRESO
-    ========================== */
-    window.addEventListener('scroll', () => {
-        const scrollTop = window.scrollY;
-        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-        const scrollPercent = (scrollTop / docHeight) * 100;
-        document.getElementById('progressBar').style.width = `${scrollPercent}%`;
-    });
+  /* =========================
+     CONTROL DE TEMA CLARO/OSCURO
+  ========================== */
+  const themeToggle = document.createElement('button');
+  themeToggle.id = 'theme-toggle';
+  themeToggle.innerHTML = '🌙';
+  document.querySelector('header').appendChild(themeToggle);
 
-    /* =========================
-       FUNCIONES AUXILIARES
-    ========================== */
-    const showAlert = (title, text, icon) => {
-        Swal.fire({
-            title,
-            text,
-            icon,
-            confirmButtonColor: '#007bff',
-            confirmButtonText: 'Entendido'
-        });
-    };
+  const savedTheme = localStorage.getItem('theme');
+  if (savedTheme) document.documentElement.setAttribute('data-theme', savedTheme);
+  themeToggle.innerHTML = savedTheme === 'dark' ? '☀️' : '🌙';
 
-    const setResult = (element, message, color = 'green') => {
-        element.textContent = message;
-        element.style.color = color;
-    };
+  themeToggle.addEventListener('click', () => {
+    const currentTheme = document.documentElement.getAttribute('data-theme');
+    const newTheme = currentTheme === 'dark' ? '' : 'dark';
+    document.documentElement.setAttribute('data-theme', newTheme);
+    localStorage.setItem('theme', newTheme);
+    themeToggle.innerHTML = newTheme === 'dark' ? '☀️' : '🌙';
+  });
 
-   /* =========================
-   CONTROL DE TEMA CLARO/OSCURO
-========================= */
-const themeToggle = document.createElement('button');
-themeToggle.id = 'theme-toggle';
-themeToggle.innerHTML = '🌙';
-document.querySelector('header').appendChild(themeToggle);
+  /* =========================
+     BARRA DE PROGRESO
+  ========================== */
+  window.addEventListener('scroll', () => {
+    const scrollTop = window.scrollY;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const scrollPercent = (scrollTop / docHeight) * 100;
+    document.getElementById('progressBar').style.width = `${scrollPercent}%`;
+  });
 
-// Cargar preferencia guardada
-const savedTheme = localStorage.getItem('theme');
-if (savedTheme) document.documentElement.setAttribute('data-theme', savedTheme);
+  /* =========================
+     PREGUNTA 1
+  ========================== */
+  const calculateButton = document.getElementById('calculateButton');
+  const input_radio_circunferencia = document.getElementById('input_radio_circunferencia');
+  const calculationResult = document.getElementById('calculationResult');
+    
+  calculateButton.addEventListener('click', function() {
+      const r = parseFloat(input_radio_circunferencia.value);
+      if (isNaN(r) || r <= 0) {
+          calculationResult.textContent = 'Por favor, ingrese un radio válido (> 0).';
+          calculationResult.style.color = 'red';
+          return;
+      }
 
-// Cambiar tema
-themeToggle.addEventListener('click', () => {
-  const currentTheme = document.documentElement.getAttribute('data-theme');
-  const newTheme = currentTheme === 'dark' ? '' : 'dark';
-  document.documentElement.setAttribute('data-theme', newTheme);
-  localStorage.setItem('theme', newTheme);
-  themeToggle.innerHTML = newTheme === 'dark' ? '☀️' : '🌙';
-});
+      const a = 5;
+      const b = r;
+      const c = - (r ** 2 - (r / 2) ** 2);
 
+      const discriminante = b * b - 4 * a * c;
+      if (discriminante < 0) {
+          calculationResult.textContent = 'No hay soluciones reales (discriminante < 0).';
+          calculationResult.style.color = 'red';
+          return;
+      }
 
-    /* =========================
-       PREGUNTA 1
-    ========================== */
-    const btn1 = document.getElementById('calculateButton');
-    const res1 = document.getElementById('calculationResult');
-    btn1.addEventListener('click', () => {
-        const r = parseFloat(document.getElementById('input_radio_circunferencia').value);
-        if (isNaN(r) || r <= 0) {
-            showAlert('Error', 'Por favor ingrese un radio válido (> 0)', 'error');
-            return;
-        }
+      const sqrtD = Math.sqrt(discriminante);
+      const x1 = (-b + sqrtD) / (2 * a);
+      const x2 = (-b - sqrtD) / (2 * a);
 
-        const a = 5, b = r, c = - (r ** 2 - (r / 2) ** 2);
-        const D = b ** 2 - 4 * a * c;
-        if (D < 0) {
-            showAlert('Sin solución', 'No hay soluciones reales (discriminante < 0)', 'warning');
-            return;
-        }
+      let x = null;
+      if (x1 > 0) {
+          x = x1;
+      } else if (x2 > 0) {
+          x = x2;
+      } else {
+          calculationResult.textContent = 'No hay raíz positiva.';
+          calculationResult.style.color = 'red';
+          return;
+      }
 
-        const sqrtD = Math.sqrt(D);
-        const x1 = (-b + sqrtD) / (2 * a);
-        const x2 = (-b - sqrtD) / (2 * a);
-        const x = x1 > 0 ? x1 : x2;
+      const area_cuadrado_grande= (r/2)**2;
+      const area_cuadrado_pequeño= x**2;
+      const area_total = 2*area_cuadrado_grande+2*area_cuadrado_pequeño;
+      calculationResult.textContent = `x = ${area_total.toFixed(5)}`;
+      calculationResult.style.color = 'green';
+  });
 
-        const areaTotal = 2 * ((r / 2) ** 2) + 2 * (x ** 2);
-        setResult(res1, `Área total = ${areaTotal.toFixed(5)} cm²`);
-    });
+  /* =========================
+     PREGUNTA 2
+  ========================== */
+  const calculateButton2 = document.getElementById('calculateButton2');
+  const input_cuadrado_lado = document.getElementById('input_cuadrado_lado');
+  const input_circunferencia_radio = document.getElementById('input_circunferencia_radio');
+  const calculationResult2 = document.getElementById('calculationResult2');
 
-    /* =========================
-       PREGUNTA 2
-    ========================== */
-    const btn2 = document.getElementById('calculateButton2');
-    const res2 = document.getElementById('calculationResult2');
-    btn2.addEventListener('click', () => {
-        const lado = parseFloat(document.getElementById('input_cuadrado_lado').value);
-        const r = parseFloat(document.getElementById('input_circunferencia_radio').value);
-        if (isNaN(lado) || isNaN(r) || lado <= 0 || r <= 0) {
-            showAlert('Error', 'Ingrese valores válidos para lado y radio', 'error');
-            return;
-        }
-        const areaCuadrado = lado ** 2;
-        const areaCirculo = Math.PI * r ** 2;
-        const areaSombreada = areaCuadrado - areaCirculo;
-        setResult(res2, `Área sombreada = ${areaSombreada.toFixed(4)} cm²`);
-    });
+  calculateButton2.addEventListener('click', function() {
+      const lado = parseFloat(input_cuadrado_lado.value);
+      const r = parseFloat(input_circunferencia_radio.value);
+
+      if (isNaN(lado) || isNaN(r)) {
+          calculationResult2.textContent = 'Por favor, ingrese números válidos en todos los campos.';
+          calculationResult2.style.color = 'red';
+          return;
+      }
+
+      const area_cuadrado = lado**2;
+      const area_circulo = (3.14)*(r**2);
+      const area = area_cuadrado - area_circulo;
+      calculationResult2.textContent = `El área sombreada es: ${area.toFixed(4)}`;
+      calculationResult2.style.color = 'green';
+  });
 
     /* =========================
        PREGUNTA 3
