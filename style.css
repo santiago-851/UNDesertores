@@ -36,61 +36,135 @@ body {
 }
 
 /* ===============================
-   CABECERA
+   CABECERA MEJORADA
    =============================== */
 header {
   position: relative;
   text-align: center;
-  padding: 2.5rem 1rem;
-  background: linear-gradient(90deg, var(--color-primario), var(--color-secundario));
+  padding: 3rem 1rem 4rem 1rem;
+  background: linear-gradient(135deg, var(--color-primario), var(--color-secundario));
   color: white;
   border-bottom: 4px solid var(--color-secundario);
+  overflow: hidden;
 }
 
+/* Contenedor principal */
+.header-content {
+  position: relative;
+  z-index: 2;
+}
+
+/* ===== Título con icono ===== */
+.title-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 50px;
+  padding: 0.6rem 1.5rem;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.title-icon:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 20px rgba(255,255,255,0.25);
+}
+
+/* Imagen del icono interactivo */
+.interactive-icon {
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
+  transition: transform 0.4s ease;
+  cursor: pointer;
+}
+
+.interactive-icon:hover {
+  transform: rotate(15deg) scale(1.1);
+}
+
+/* ===== Título ===== */
 header h1 {
-  font-size: 2rem;
-  margin-bottom: 0.3rem;
-  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  font-size: 2.2rem;
+  font-weight: 700;
+  margin: 0;
+  color: #fff;
+  text-shadow: 0 3px 8px rgba(0,0,0,0.3);
 }
 
+/* Subtítulo */
 header h2 {
+  margin-top: 0.6rem;
   font-size: 1.1rem;
   opacity: 0.9;
 }
 
-header img {
+/* Imagen principal (foto o logo) */
+header img#calculation-image {
   width: 220px;
   border-radius: 10px;
-  margin-top: 1rem;
+  margin-top: 1.2rem;
   transition: transform 0.4s;
 }
 
-header img:hover {
+header img#calculation-image:hover {
   transform: scale(1.05);
 }
 
-header a {
+/* ===== Botón canal ===== */
+header .youtube-channel-link a {
   color: white;
   font-weight: bold;
   text-decoration: none;
   border: 2px solid white;
   padding: 0.5rem 1.2rem;
-  border-radius: 6px;
+  border-radius: 8px;
   display: inline-block;
-  margin-top: 1rem;
+  margin-top: 1.2rem;
   transition: 0.3s;
+  background: rgba(255,255,255,0.1);
 }
 
-header a:hover {
+header .youtube-channel-link a:hover {
   background: white;
   color: var(--color-primario);
+  box-shadow: 0 4px 12px rgba(255,255,255,0.3);
 }
 
-/* Botón de modo oscuro/claro */
+/* ===== Íconos flotantes ===== */
+.floating-icons {
+  position: absolute;
+  top: 25px;
+  right: 80px;
+  display: flex;
+  gap: 12px;
+  z-index: 10;
+}
+
+.float-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  cursor: pointer;
+  object-fit: cover;
+  border: 2px solid white;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.3);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.float-icon:hover {
+  transform: scale(1.15);
+  box-shadow: 0 5px 15px rgba(255,255,255,0.4);
+}
+
+/* ===== Botón de tema ===== */
 #theme-toggle {
   position: absolute;
-  top: 20px;
-  right: 20px;
+  top: 25px;
+  right: 25px;
   background: white;
   border: none;
   border-radius: 50%;
@@ -99,8 +173,9 @@ header a:hover {
   cursor: pointer;
   font-size: 20px;
   color: var(--color-primario);
-  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 3px 8px rgba(0,0,0,0.2);
   transition: 0.3s;
+  z-index: 12;
 }
 
 #theme-toggle:hover {
@@ -145,7 +220,7 @@ section {
   box-shadow: 0 4px 14px var(--sombra);
   border: 1px solid var(--borde);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-  overflow: hidden; /* Evita que las imágenes sobresalgan */
+  overflow: hidden;
 }
 
 section:hover {
@@ -213,12 +288,12 @@ button {
   max-width: 250px;
   display: block;
   margin: 0.5rem auto;
-  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 3px 8px rgba(0,0,0,0.15);
 }
 
 button:hover {
   transform: translateY(-3px);
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.25);
 }
 
 /* ===============================
@@ -252,9 +327,20 @@ footer {
    RESPONSIVE DESIGN
    =============================== */
 @media (max-width: 768px) {
-  header img {
+  header img#calculation-image {
     width: 180px;
   }
+
+  .title-icon {
+    flex-direction: column;
+    padding: 1rem;
+  }
+
+  .floating-icons {
+    right: 70px;
+    top: 80px;
+  }
+
   button {
     font-size: 0.9rem;
   }
